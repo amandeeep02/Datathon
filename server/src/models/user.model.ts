@@ -13,10 +13,6 @@ const UserSchema = new mongoose.Schema<IUser>(
       trim: true,
       required: true,
     },
-    gender: {
-      type: String,
-      trim: true,
-    },
     email: {
       type: String,
       trim: true,
@@ -24,25 +20,26 @@ const UserSchema = new mongoose.Schema<IUser>(
       unique: true,
       required: true,
     },
-    phone: {
+    experienceLevel: {
       type: String,
-      trim: true,
+      enum: ["beginner", "moderate", "pro"],
+      required: true,
     },
-    currentLocation: String,
-    destination: String,
-    eta: String,
-    isOnline: {
-      type: Boolean,
-      default: false,
+    investmentTimeline: {
+      type: String,
+      enum: ["long-term", "short-term"],
+      required: true,
     },
-    activeJourney: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Journey",
+    investmentBudget: {
+      type: Number,
+      required: true,
+    },
+    tradingStrategy: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-const UserModel = mongoose.model<IUser>("Users", UserSchema);
-
-export default UserModel;
+export default mongoose.model<IUser>("Users", UserSchema);

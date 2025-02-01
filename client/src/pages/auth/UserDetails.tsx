@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
 import { cn } from "../../lib/utils";
-import { Dropdown } from "@/components/Dropdown";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +14,10 @@ export function UserDetails() {
     firstname: "",
     lastname: "",
     email: "",
-    gender: "",
+    experienceLevel: "",
+    investmentTimeline: "",
+    investmentBudget: "",
+    tradingStrategy: "",
   });
 
   useEffect(() => {
@@ -26,14 +28,13 @@ export function UserDetails() {
         firstname: names[0] || "",
         lastname: names.slice(1).join(" ") || "",
         email: currentUser.email || "",
-        gender: "",
+        experienceLevel: "",
+        investmentTimeline: "",
+        investmentBudget: "",
+        tradingStrategy: "",
       });
     }
   }, [currentUser]);
-
-  const handleGenderChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, gender: value }));
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +44,10 @@ export function UserDetails() {
         firstName: formData.firstname,
         lastName: formData.lastname,
         email: formData.email,
-        gender: formData.gender,
+        experienceLevel: formData.experienceLevel,
+        investmentTimeline: formData.investmentTimeline,
+        investmentBudget: Number(formData.investmentBudget),
+        tradingStrategy: formData.tradingStrategy,
       });
 
       if (response.data) {
@@ -108,16 +112,19 @@ export function UserDetails() {
               disabled
             />
           </LabelInputContainer>
-          <LabelInputContainer className="mb-4">
-            <Label htmlFor="gender">Gender</Label>
-            <Dropdown onSelect={handleGenderChange} />
-          </LabelInputContainer>
 
           <LabelInputContainer className="mb-4">
             <Label htmlFor="type">Experience Level</Label>
             <select
               id="type"
               name="type"
+              value={formData.experienceLevel}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  experienceLevel: e.target.value,
+                }))
+              }
               className="w-full rounded-md border border-gray-300 p-2"
               required
             >
@@ -136,8 +143,15 @@ export function UserDetails() {
                   type="radio"
                   name="intent"
                   value="long-term"
+                  checked={formData.investmentTimeline === "long-term"}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      investmentTimeline: e.target.value,
+                    }))
+                  }
                   required
-                  className="mr-2"
+                  className="mr-2"  
                 />
                 Long Term
               </label>
@@ -160,10 +174,15 @@ export function UserDetails() {
               type="number"
               id="budget"
               name="budget"
+              value={formData.investmentBudget}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  investmentBudget: e.target.value,
+                }))
+              }
               className="w-full rounded-md border border-gray-300 p-2"
-              placeholder="Enter your investment budget"
               required
-              min="0"
             />
           </LabelInputContainer>
 
@@ -172,9 +191,14 @@ export function UserDetails() {
             <textarea
               id="strategy"
               name="strategy"
+              value={formData.tradingStrategy}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  tradingStrategy: e.target.value,
+                }))
+              }
               className="w-full rounded-md border border-gray-300 p-2"
-              rows={4}
-              placeholder="Describe your trading strategy, risk tolerance, and investment goals..."
               required
             />
           </LabelInputContainer>

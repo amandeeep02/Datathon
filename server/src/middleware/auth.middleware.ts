@@ -6,7 +6,7 @@ export const authCheck = async (
   next: NextFunction
 ) => {
   try {
-    const { email } = req.body;
+    const email = req.body.email || req.params.email;
     if (!email) {
       return res.status(401).json({ error: "Email is required" });
     }

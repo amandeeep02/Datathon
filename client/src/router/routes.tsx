@@ -3,7 +3,8 @@ import { Landing } from "../pages/Landing";
 import { PrivateRoute } from "./PrivateRoute";
 import { AuthProvider } from "../contexts/AuthContext";
 import { UserDetails } from "@/pages/auth/UserDetails";
-import Dashboard from "@/pages/Dashboard";
+import DashboardPage from "../pages/dashboard/index";
+
 
 const AppRoutes = () => {
   return (
@@ -22,7 +23,7 @@ const AppRoutes = () => {
           path="/dashboard"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <DashboardPage />
             </PrivateRoute>
           }
         />
