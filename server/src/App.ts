@@ -16,7 +16,7 @@ const mongoUri = process.env.MONGODB_URI || "";
 // Add CORS middleware before routes
 app.use(
   cors({
-    origin: "http://localhost:5173", // Your frontend URL
+    origin: "*", // Your frontend URL
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
