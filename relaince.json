@@ -1,0 +1,84 @@
+{
+    "chart": {
+      "result": [
+        {
+          "meta": {
+            "currency": "INR",
+            "symbol": "INDUSINDBK.NS",
+            "exchangeName": "NSI",
+            "fullExchangeName": "NSE",
+            "instrumentType": "EQUITY",
+            "firstTradeDate": 1025495100,
+            "regularMarketTime": 1738403999,
+            "hasPrePostMarketData": false,
+            "gmtoffset": 19800,
+            "timezone": "IST",
+            "exchangeTimezoneName": "Asia/Kolkata",
+            "regularMarketPrice": 1009.4,
+            "fiftyTwoWeekHigh": 1576.35,
+            "fiftyTwoWeekLow": 923.7,
+            "regularMarketDayHigh": 1023,
+            "regularMarketDayLow": 972.4,
+            "regularMarketVolume": 6053995,
+            "longName": "IndusInd Bank Limited",
+            "shortName": "INDUSIND BANK LIMITED",
+            "chartPreviousClose": 934.15,
+            "priceHint": 2,
+            "currentTradingPeriod": {
+              "pre": {
+                "timezone": "IST",
+                "start": 1738381500,
+                "end": 1738381500,
+                "gmtoffset": 19800
+              },
+              "regular": {
+                "timezone": "IST",
+                "start": 1738381500,
+                "end": 1738404000,
+                "gmtoffset": 19800
+              },
+              "post": {
+                "timezone": "IST",
+                "start": 1738404000,
+                "end": 1738404000,
+                "gmtoffset": 19800
+              }
+            },
+            "dataGranularity": "1d",
+            "range": "5d",
+            "validRanges": [
+              "1d",
+              "5d",
+              "1mo",
+              "3mo",
+              "6mo",
+              "1y",
+              "2y",
+              "5y",
+              "10y",
+              "ytd",
+              "max"
+            ]
+          },
+          "timestamp": [1738035900, 1738122300, 1738208700, 1738295100, 1738403999],
+          "indicators": {
+            "quote": [
+              {
+                "low": [925.700012207031, 931.950012207031, 946.099975585938, 953.099975585938, 972.400024414063],
+                "close": [934.150024414063, 948.299987792969, 957.049987792969, 991.200012207031, 1009.40002441406],
+                "high": [948.950012207031, 953, 967.400024414063, 999.299987792969, 1023],
+                "open": [937.349975585938, 935.700012207031, 948.299987792969, 957.549987792969, 977],
+                "volume": [5708478, 2571504, 4509409, 5365839, 6053995]
+              }
+            ],
+            "adjclose": [
+              {
+                "adjclose": [934.150024414063, 948.299987792969, 957.049987792969, 991.200012207031, 1009.40002441406]
+              }
+            ]
+          }
+        }
+      ],
+      "error": null
+    }
+  }
