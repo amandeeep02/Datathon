@@ -4,6 +4,7 @@ import cors from "cors";
 import http from "http";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.routes";
+// import yahooFinanceRoutes from "./routes/yahoo-finance.routes";
 
 // Load environment variables
 dotenv.config();
@@ -55,3 +56,4 @@ process.on("unhandledRejection", (err: Error) => {
 
 // Add after your middleware setup
 app.use("/api", userRoutes);
+// app.use("/api", yahooFinanceRoutes);

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,8 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { TimeFrame } from "./timeframe";
+import { fetchStockData } from "./stock/stock.service";
+import { StockData } from "./stock/stock.type";
 
-// Register the required chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,103 +22,61 @@ ChartJS.register(
   Legend
 );
 
-interface CandleData {
-  label: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-}
+export default function Overview() {
+  const [stockData, setStockData] = useState<StockData | null>(null);
+  const [loading, setLoading] = useState(false);
 
-interface CandleChartProps {
-  data: CandleData[];
-}
-
-const CandleChart: React.FC<CandleChartProps> = ({ data }) => {
-  const chartData = {
-    labels: data.map((item) => item.label),
-    datasets: [
-      {
-        label: "Stock Price",
-        data: data.map((item) => ({
-          x: item.label,
-          y: item.close,
-          open: item.open,
-          high: item.high,
-          low: item.low,
-          close: item.close,
-        })),
-        backgroundColor: data.map((item) =>
-          item.open > item.close
-            ? "rgba(255, 99, 132, 0.8)"
-            : "rgba(75, 192, 192, 0.8)"
-        ),
-        borderColor: data.map((item) =>
-          item.open > item.close ? "rgb(255, 99, 132)" : "rgb(75, 192, 192)"
-        ),
-        borderWidth: 1,
-      },
-    ],
+  const loadStockData = async (interval: string, range: string) => {
+    setLoading(true);
+    try {
+      const data = await fetchStockData("RELIANCE.NS", interval, range);
+      setStockData(data);
+    } catch (error) {
+      console.error("Failed to fetch stock data:", error);
+    }
+    setLoading(false);
   };
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: (context: any) => {
-            const dataPoint = context.raw;
-            return [
-              `Open: $${dataPoint.open.toFixed(2)}`,
-              `High: $${dataPoint.high.toFixed(2)}`,
-              `Low: $${dataPoint.low.toFixed(2)}`,
-              `Close: $${dataPoint.close.toFixed(2)}`,
-            ];
+  useEffect(() => {
+    loadStockData("1d", "1mo");
+  }, []);
+
+  const chartData = stockData
+    ? {
+        labels: stockData.chart.result[0].timestamp.map((ts) =>
+          new Date(ts * 1000).toLocaleDateString()
+        ),
+        datasets: [
+          {
+            label: "Stock Price",
+            data: stockData.chart.result[0].indicators.quote[0].close,
+            backgroundColor: "rgba(75, 192, 192, 0.6)",
           },
-        },
-      },
-    },
-    scales: {
-      x: {
-        type: "category" as const,
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: false,
-        grid: {
-          color: "rgba(0, 0, 0, 0.1)",
-        },
-      },
-    },
-  };
+        ],
+      }
+    : null;
 
   return (
-    <div style={{ height: "400px", width: "100%" }}>
-      <Bar data={chartData} options={options} />
+    <div className="w-full p-4 bg-white rounded-lg shadow-lg">
+      <div className="mb-4">
+        <TimeFrame onSelect={loadStockData} />
+      </div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        chartData && (
+          <Bar
+            data={chartData}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { position: "top" },
+                title: { display: true, text: "Stock Price Chart" },
+              },
+            }}
+          />
+        )
+      )}
     </div>
   );
-};
-
-const Overview: React.FC = () => {
-  const sampleData: CandleData[] = [
-    { label: "Mon", open: 100, high: 110, low: 95, close: 105 },
-    { label: "Tue", open: 105, high: 115, low: 100, close: 110 },
-    { label: "Wed", open: 110, high: 120, low: 108, close: 115 },
-    { label: "Thu", open: 115, high: 118, low: 112, close: 113 },
-    { label: "Fri", open: 113, high: 116, low: 110, close: 112 },
-  ];
-
-  return (
-    <div className="w-full p-4">
-      <CandleChart data={sampleData} />
-    </div>
-  );
-};
-
-export default Overview;
+}
