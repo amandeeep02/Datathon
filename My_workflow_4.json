@@ -1,0 +1,556 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -580,
+        -100
+      ],
+      "id": "900aa4ac-9ca1-4273-b5f3-2ea63ee13e3e",
+      "name": "Telegram Trigger",
+      "webhookId": "ff640e63-b488-41a9-8f83-c6d6e29c402a",
+      "credentials": {
+        "telegramApi": {
+          "id": "38dthPukUMsWp5Vw",
+          "name": "Telegram account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a44159bc-9bba-4b41-bfc5-0a61c2a48727",
+                    "leftValue": "={{ $json.message.text || \"\" }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "31bdf772-6fe6-4162-83ff-3b27cba41947",
+                    "leftValue": "Text",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notExists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Error"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "56cdd7d6-e257-478f-bb0c-13e0d75262fd",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        -120
+      ],
+      "id": "67004fd2-0713-4464-83a4-39ac50f35f87",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        -240
+      ],
+      "id": "815fd901-084b-4a26-b66d-b4338970d997",
+      "name": "Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "38dthPukUMsWp5Vw",
+          "name": "Telegram account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        320,
+        -320
+      ],
+      "id": "6f4444da-0be3-4f15-a355-d8b412b56eb5",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "Sg20gBe2HLQMOobu",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2c0f85ad-87ef-4b15-a895-1ecb8ffb4ce4",
+              "name": "text",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        280,
+        -120
+      ],
+      "id": "743189fa-23b0-46f3-b342-ba037fbc4947",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "options": {
+          "systemMessage": "you name is mahesh your task is to help people with stock market trading help them with the following steps given below\n\n\nTo analyze stock market trading with the given parameters, you can use several mathematical models. Below are some techniques and a method to create a *Personal Stock Score (PSS)* based on a weighted approach.\n\n---\n\n## *Mathematical Techniques for Stock Market Trading*\n\n### *1. Moving Averages (MA)*\n- *Simple Moving Average (SMA)*:  \n  \\[\n  SMA = \\frac{\\sum_{i=0}^{n} P_i}{n}\n  \\]\n  where \\( P_i \\) is the closing price for day \\( i \\), and \\( n \\) is the number of days.\n- *Exponential Moving Average (EMA)*:  \n  \\[\n  EMA = P_t \\cdot k + EMA_{t-1} \\cdot (1-k)\n  \\]\n  where \\( k = \\frac{2}{n+1} \\).\n\n*Use case*: Identifies trends and potential buy/sell signals.\n\n---\n\n### *2. Relative Strength Index (RSI)*\n\\[\nRSI = 100 - \\frac{100}{1 + RS}\n\\]\nwhere \\( RS = \\frac{\\text{Average Gain over n periods}}{\\text{Average Loss over n periods}} \\).\n\n- RSI *above 70* → Overbought (sell signal).\n- RSI *below 30* → Oversold (buy signal).\n\n*Use case*: Measures momentum and overbought/oversold conditions.\n\n---\n\n### *3. Bollinger Bands*\n\\[\n\\text{Upper Band} = SMA + (k \\times \\sigma)\n\\]\n\\[\n\\text{Lower Band} = SMA - (k \\times \\sigma)\n\\]\nwhere \\( \\sigma \\) is the standard deviation of stock prices.\n\n*Use case*: Detects volatility and price breakouts.\n\n---\n\n### *4. Price Momentum Score (PMS)*\n\\[\nPMS = \\frac{\\text{Closing Price} - \\text{Opening Price}}{\\text{Opening Price}} \\times 100\n\\]\n\n- *Positive PMS*: Uptrend.\n- *Negative PMS*: Downtrend.\n\n*Use case*: Determines daily momentum.\n\n---\n\n### *5. Market Sentiment Adjustment*\n\\[\n\\text{Sentiment Impact} = \\frac{\\text{Market Sentiment Score}}{10} \\times 100\n\\]\n\n- *Positive (>50%)*: Boosts stock score.\n- *Negative (<50%)*: Lowers stock score.\n\n*Use case*: Incorporates news sentiment.\n\n---\n\n### *6. Price-to-Earnings (P/E) Ratio*\n\\[\n\\text{P/E Ratio} = \\frac{\\text{Stock Price}}{\\text{Earnings Per Share}}\n\\]\n\n- *High P/E*: Growth stock (can be risky).\n- *Low P/E*: Value stock (more stable).\n\n*Use case*: Identifies undervalued/overvalued stocks.\n\n---\n\n## *Personal Stock Score (PSS) Calculation*\nA composite score considering multiple factors:\n\n\\[\nPSS = w_1 \\times PMS + w_2 \\times RSI + w_3 \\times \\text{Sentiment Impact} - w_4 \\times \\text{P/E Ratio}\n\\]\n\nwhere:\n- \\( w_1, w_2, w_3, w_4 \\) are adjustable weights based on importance.\n- We normalize the values to ensure a fair comparison.\n\n### *Example Weighting:*\n- *Price Momentum (PMS):* \\( w_1 = 0.3 \\)\n- *RSI Score:* \\( w_2 = 0.2 \\)\n- *Sentiment Impact:* \\( w_3 = 0.4 \\)\n- *P/E Ratio Adjustment:* \\( w_4 = 0.1 \\) (to penalize high P/E ratios)\n\n*Final Score Interpretation:*\n- *PSS > 70*: Strong Buy\n- *50 ≤ PSS ≤ 70*: Moderate Buy\n- *30 ≤ PSS < 50*: Neutral\n- *PSS < 30*: Avoid\n\n---\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        500,
+        -120
+      ],
+      "id": "9672b4df-1f94-4d28-b451-39462435f515",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        420,
+        200
+      ],
+      "id": "bb0450c5-30bc-43eb-a51b-d87b4559e0d4",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "9ASt1zncjBq7nsUd",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $(\"Telegram Trigger\").first().json.message.from.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1540,
+        -120
+      ],
+      "id": "755f4332-e3d9-4e0a-951a-63558ea41764",
+      "name": "Telegram1",
+      "credentials": {
+        "telegramApi": {
+          "id": "38dthPukUMsWp5Vw",
+          "name": "Telegram account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "filters": {
+          "labelIds": [
+            "INBOX",
+            "UNREAD"
+          ],
+          "readStatus": "unread",
+          "receivedAfter": "={{ $fromAI(\"date\",\"the date after which fetch the message in format YYYY MM DDTH:MM:SS\") }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        1020,
+        180
+      ],
+      "id": "981ff259-fe1f-43c1-9d1e-98dc8640fcc3",
+      "name": "Gmail",
+      "webhookId": "fa54e62c-ebd5-410b-8d62-db752489833e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "LKMMrPSiX3lswz61",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1jNXka0yZYu2oAzlG7iacjX-OoLQWyNgFdH2iCH5pH9k",
+          "mode": "list",
+          "cachedResultName": "Time Table Excel File",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jNXka0yZYu2oAzlG7iacjX-OoLQWyNgFdH2iCH5pH9k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2081446818,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jNXka0yZYu2oAzlG7iacjX-OoLQWyNgFdH2iCH5pH9k/edit#gid=2081446818"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        220
+      ],
+      "id": "a5e4b080-33ba-4065-bbc6-a66081afe649",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "M56VtL6pg3ShgYfw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        220
+      ],
+      "id": "13d8ed84-fd62-4fe0-a87e-0a1603c05f09",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "K60Jtm9Tm7eM3Icn",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        600,
+        300
+      ],
+      "id": "7df70b35-8bb9-435e-a065-2c743b0634ed",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').first().json.message.from.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        440,
+        400
+      ],
+      "id": "41c29d8e-dcc9-4bf4-998e-192dcecdec27",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        140
+      ],
+      "id": "6c7acbc5-e3f4-4234-b41c-b51ad9160879",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "9ASt1zncjBq7nsUd",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "733c4901-2959-4cdc-a87a-94b69c471ed6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5509ab29c41faa7a54422b79dd3c666758314ce2d6c30fe4dcb19d99df09f542"
+  },
+  "id": "vvGKx2MVfsNIVaQm",
+  "tags": []
+}
