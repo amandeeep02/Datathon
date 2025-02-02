@@ -1,0 +1,72 @@
+{
+  "chart": {
+    "result": [
+      {
+        "meta": {
+          "currency": "INR",
+          "symbol": "SBIN.NS",
+          "exchangeName": "NSI",
+          "fullExchangeName": "NSE",
+          "instrumentType": "EQUITY",
+          "firstTradeDate": 820467900,
+          "regularMarketTime": 1738404000,
+          "hasPrePostMarketData": false,
+          "gmtoffset": 19800,
+          "timezone": "IST",
+          "exchangeTimezoneName": "Asia/Kolkata",
+          "regularMarketPrice": 766,
+          "fiftyTwoWeekHigh": 912,
+          "fiftyTwoWeekLow": 637.7,
+          "regularMarketDayHigh": 778.75,
+          "regularMarketDayLow": 752.15,
+          "regularMarketVolume": 9360659,
+          "longName": "State Bank of India",
+          "shortName": "STATE BANK OF INDIA",
+          "chartPreviousClose": 762.6,
+          "previousClose": 762.6,
+          "scale": 3,
+          "priceHint": 2,
+          "currentTradingPeriod": {
+            "pre": {
+              "timezone": "IST",
+              "start": 1738381500,
+              "end": 1738381500,
+              "gmtoffset": 19800
+            },
+            "regular": {
+              "timezone": "IST",
+              "start": 1738381500,
+              "end": 1738404000,
+              "gmtoffset": 19800
+            },
+            "post": {
+              "timezone": "IST",
+              "start": 1738404000,
+              "end": 1738404000,
+              "gmtoffset": 19800
+            }
+          },
+          "dataGranularity": "5m",
+          "range": "1d",
+          "validRanges": [
+            "1d",
+            "5d",
+            "1mo",
+            "3mo",
+            "6mo",
+            "1y",
+            "2y",
+            "5y",
+            "10y",
+            "ytd",
+            "max"
+          ]
+        },
+        "indicators": {
+          "quote": [{}]
+        }
+      }
+    ],
+    "error": null
+  }
+}

@@ -38,6 +38,39 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
+    rent: {
+      type: Number,
+      required: true,
+    },
+    labour: {
+      type: Number,
+      required: true,
+    },
+    transport: {
+      type: Number,
+      required: true,
+    },
+    material: {
+      type: Number,
+      required: true,
+    },
+    others: {
+      type: Number,
+      required: true,
+    },
+    monthlyProfits: {
+      type: Number,
+      required: true,
+    },
+    goals: {
+      type: String,
+      required: true,
+    },
+    riskTolerance: {
+      type: String,
+      enum: ["low", "medium", "high"],
+      required: true,
+    },
   },
   { timestamps: true }
 );

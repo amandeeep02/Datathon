@@ -10,6 +10,14 @@ export const createOrUpdateUser = async (req: Request, res: Response) => {
     investmentTimeline,
     investmentBudget,
     tradingStrategy,
+    rent,
+    labour,
+    transport,
+    material,
+    others,
+    monthlyProfits,
+    goals,
+    riskTolerance,
   } = req.body;
 
   try {
@@ -23,6 +31,14 @@ export const createOrUpdateUser = async (req: Request, res: Response) => {
         investmentTimeline,
         investmentBudget,
         tradingStrategy,
+        rent,
+        labour,
+        transport,
+        material,
+        others,
+        monthlyProfits,
+        goals,
+        riskTolerance,
       },
       { new: true, upsert: true }
     );

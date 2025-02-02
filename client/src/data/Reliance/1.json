@@ -1,0 +1,91 @@
+{
+  "chart": {
+    "result": [
+      {
+        "meta": {
+          "currency": "INR",
+          "symbol": "RELIANCE.NS",
+          "exchangeName": "NSI",
+          "fullExchangeName": "NSE",
+          "instrumentType": "EQUITY",
+          "firstTradeDate": 820467900,
+          "regularMarketTime": 1738403999,
+          "hasPrePostMarketData": false,
+          "gmtoffset": 19800,
+          "timezone": "IST",
+          "exchangeTimezoneName": "Asia/Kolkata",
+          "regularMarketPrice": 1264.6,
+          "fiftyTwoWeekHigh": 1608.8,
+          "fiftyTwoWeekLow": 1201.5,
+          "regularMarketDayHigh": 1270.55,
+          "regularMarketDayLow": 1241,
+          "regularMarketVolume": 7118038,
+          "longName": "Reliance Industries Limited",
+          "shortName": "RELIANCE INDUSTRIES LTD",
+          "chartPreviousClose": 1253.05,
+          "previousClose": 1253.05,
+          "scale": 3,
+          "priceHint": 2,
+          "currentTradingPeriod": {
+            "pre": {
+              "timezone": "IST",
+              "start": 1738381500,
+              "end": 1738381500,
+              "gmtoffset": 19800
+            },
+            "regular": {
+              "timezone": "IST",
+              "start": 1738381500,
+              "end": 1738404000,
+              "gmtoffset": 19800
+            },
+            "post": {
+              "timezone": "IST",
+              "start": 1738404000,
+              "end": 1738404000,
+              "gmtoffset": 19800
+            }
+          },
+          "tradingPeriods": [
+            [
+              {
+                "timezone": "IST",
+                "start": 1738381500,
+                "end": 1738404000,
+                "gmtoffset": 19800
+              }
+            ]
+          ],
+          "dataGranularity": "5m",
+          "range": "1d",
+          "validRanges": [
+            "1d",
+            "5d",
+            "1mo",
+            "3mo",
+            "6mo",
+            "1y",
+            "2y",
+            "5y",
+            "10y",
+            "ytd",
+            "max"
+          ]
+        },
+        "timestamp": [1738403700],
+        "indicators": {
+          "quote": [
+            {
+              "volume": [0],
+              "low": [1264.59997558594],
+              "close": [1264.59997558594],
+              "open": [1264.59997558594],
+              "high": [1264.59997558594]
+            }
+          ]
+        }
+      }
+    ],
+    "error": null
+  }
+}

@@ -7,10 +7,28 @@ import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export function UserDetails() {
+interface FormData {
+  firstname: string;
+  lastname: string;
+  email: string;
+  experienceLevel: string;
+  investmentTimeline: string;
+  investmentBudget: string;
+  tradingStrategy: string;
+  rent: number;
+  labour: number;
+  transport: number;
+  material: number;
+  others: number;
+  monthlyProfits: number;
+  goals: string;
+  riskTolerance: "low" | "medium" | "high";
+}
+
+export default function UserDetails() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     firstname: "",
     lastname: "",
     email: "",
@@ -18,6 +36,14 @@ export function UserDetails() {
     investmentTimeline: "",
     investmentBudget: "",
     tradingStrategy: "",
+    rent: 0,
+    labour: 0,
+    transport: 0,
+    material: 0,
+    others: 0,
+    monthlyProfits: 0,
+    goals: "",
+    riskTolerance: "low",
   });
 
   useEffect(() => {
@@ -32,6 +58,14 @@ export function UserDetails() {
         investmentTimeline: "",
         investmentBudget: "",
         tradingStrategy: "",
+        rent: 0,
+        labour: 0,
+        transport: 0,
+        material: 0,
+        others: 0,
+        monthlyProfits: 0,
+        goals: "",
+        riskTolerance: "low",
       });
     }
   }, [currentUser]);
@@ -48,6 +82,14 @@ export function UserDetails() {
         investmentTimeline: formData.investmentTimeline,
         investmentBudget: Number(formData.investmentBudget),
         tradingStrategy: formData.tradingStrategy,
+        rent: formData.rent,
+        labour: formData.labour,
+        transport: formData.transport,
+        material: formData.material,
+        others: formData.others,
+        monthlyProfits: formData.monthlyProfits,
+        goals: formData.goals,
+        riskTolerance: formData.riskTolerance,
       });
 
       if (response.data) {
@@ -151,7 +193,7 @@ export function UserDetails() {
                     }))
                   }
                   required
-                  className="mr-2"  
+                  className="mr-2"
                 />
                 Long Term
               </label>
@@ -191,6 +233,7 @@ export function UserDetails() {
             <textarea
               id="strategy"
               name="strategy"
+              placeholder="I currently use a mix of technical and fundamental analysis to make my trades."
               value={formData.tradingStrategy}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -202,6 +245,155 @@ export function UserDetails() {
               required
             />
           </LabelInputContainer>
+
+          <h3 className="font-semibold text-lg mb-4">Business Information</h3>
+
+          <div className="space-y-4">
+            <LabelInputContainer>
+              <Label htmlFor="rent">Monthly Rent</Label>
+              <input
+                type="number"
+                id="rent"
+                value={formData.rent}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    rent: Number(e.target.value),
+                  }))
+                }
+                className="w-full rounded-md border p-2"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="labour">Labour Cost</Label>
+              <input
+                type="number"
+                id="labour"
+                value={formData.labour}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    labour: Number(e.target.value),
+                  }))
+                }
+                className="w-full rounded-md border p-2"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="transport">Transport Cost</Label>
+              <input
+                type="number"
+                id="transport"
+                value={formData.transport}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    transport: Number(e.target.value),
+                  }))
+                }
+                className="w-full rounded-md border p-2"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="material">Material Cost</Label>
+              <input
+                type="number"
+                id="material"
+                value={formData.material}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    material: Number(e.target.value),
+                  }))
+                }
+                className="w-full rounded-md border p-2"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="others">Other Expenses</Label>
+              <input
+                type="number"
+                id="others"
+                value={formData.others}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    others: Number(e.target.value),
+                  }))
+                }
+                className="w-full rounded-md border p-2"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="monthlyProfits">Monthly Profits</Label>
+              <input
+                type="number"
+                id="monthlyProfits"
+                value={formData.monthlyProfits}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    monthlyProfits: Number(e.target.value),
+                  }))
+                }
+                className="w-full rounded-md border p-2"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="goals">Business Goals</Label>
+              <textarea
+                placeholder="I want to increase my monthly profits by 20% in the next 6 months."
+                id="goals"
+                value={formData.goals}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, goals: e.target.value }))
+                }
+                className="w-full rounded-md border p-2"
+                rows={4}
+                required
+              />
+            </LabelInputContainer>
+
+            <div>
+              <Label>Risk Tolerance</Label>
+              <div className="flex gap-4 mt-2">
+                {["low", "medium", "high"].map((level) => (
+                  <label key={level} className="flex items-center">
+                    <input
+                      type="radio"
+                      name="riskTolerance"
+                      value={level}
+                      checked={formData.riskTolerance === level}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          riskTolerance: e.target.value as
+                            | "low"
+                            | "medium"
+                            | "high",
+                        }))
+                      }
+                      className="mr-2"
+                      required
+                    />
+                    {level.charAt(0).toUpperCase() + level.slice(1)}
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
 
           <button
             className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"

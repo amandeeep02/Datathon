@@ -9,4 +9,12 @@ export interface IUser extends Document {
   investmentTimeline: "long-term" | "short-term";
   investmentBudget: number;
   tradingStrategy: string;
+  rent: number;
+  labour: number;
+  transport: number;
+  material: number;
+  others: number;
+  monthlyProfits: number;
+  goals: string;
+  riskTolerance: "low" | "medium" | "high";
 }

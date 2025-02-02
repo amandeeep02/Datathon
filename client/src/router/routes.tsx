@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Landing } from "../pages/Landing";
 import { PrivateRoute } from "./PrivateRoute";
 import { AuthProvider } from "../contexts/AuthContext";
-import { UserDetails } from "@/pages/auth/UserDetails";
+import  UserDetails  from "@/pages/auth/UserDetails";
 import DashboardPage from "../pages/dashboard/index";
 
 

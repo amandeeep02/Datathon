@@ -1,0 +1,72 @@
+{
+  "chart": {
+    "result": [
+      {
+        "meta": {
+          "currency": "INR",
+          "symbol": "INFY.NS",
+          "exchangeName": "NSI",
+          "fullExchangeName": "NSE",
+          "instrumentType": "EQUITY",
+          "firstTradeDate": 820467900,
+          "regularMarketTime": 1738404000,
+          "hasPrePostMarketData": false,
+          "gmtoffset": 19800,
+          "timezone": "IST",
+          "exchangeTimezoneName": "Asia/Kolkata",
+          "regularMarketPrice": 1851.35,
+          "fiftyTwoWeekHigh": 2006.45,
+          "fiftyTwoWeekLow": 1358.35,
+          "regularMarketDayHigh": 1890.6,
+          "regularMarketDayLow": 1846,
+          "regularMarketVolume": 1700829,
+          "longName": "Infosys Limited",
+          "shortName": "INFOSYS LIMITED",
+          "chartPreviousClose": 1859.95,
+          "previousClose": 1859.95,
+          "scale": 3,
+          "priceHint": 2,
+          "currentTradingPeriod": {
+            "pre": {
+              "timezone": "IST",
+              "start": 1738381500,
+              "end": 1738381500,
+              "gmtoffset": 19800
+            },
+            "regular": {
+              "timezone": "IST",
+              "start": 1738381500,
+              "end": 1738404000,
+              "gmtoffset": 19800
+            },
+            "post": {
+              "timezone": "IST",
+              "start": 1738404000,
+              "end": 1738404000,
+              "gmtoffset": 19800
+            }
+          },
+          "dataGranularity": "5m",
+          "range": "1d",
+          "validRanges": [
+            "1d",
+            "5d",
+            "1mo",
+            "3mo",
+            "6mo",
+            "1y",
+            "2y",
+            "5y",
+            "10y",
+            "ytd",
+            "max"
+          ]
+        },
+        "indicators": {
+          "quote": [{}]
+        }
+      }
+    ],
+    "error": null
+  }
+}
