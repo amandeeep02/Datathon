@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -18,6 +18,7 @@ import {
 import Overview from "./components/overview";
 import TopStocks from "./components/top-stocks";
 import StockAnalysis from "./components/analysis";
+import Report from "./components/report";
 
 export default function DashboardPage() {
   return (
@@ -39,6 +40,7 @@ export default function DashboardPage() {
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="Analysis">Analysis</TabsTrigger>
+            <TabsTrigger value="Reports">Reports</TabsTrigger>
           </TabsList>
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -132,6 +134,10 @@ export default function DashboardPage() {
                 </p>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="Reports" className="space-y-4">
+            <Report />
           </TabsContent>
         </Tabs>
       </div>
